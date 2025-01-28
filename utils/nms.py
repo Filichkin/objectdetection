@@ -88,13 +88,13 @@ def non_max_suppression(
         # ограничивающие рамки и предсказания классов.
         # box - предсказанные ограничивающие рамки, size (nb, 4).
         # cls - предсказания классов, size (nb, nc)
-        box, cls = pr. split((4, nc), dim=1)
+        box, cls = pr.split((4, nc), dim=1)
 
         # Получаем индекс предсказанного класса
         # и предсказанное значение (score).
         # При этом сохраняем размерность тензоров
         # (с помощью аргумента keepdim).
-        score, idx_cls = cls-max(dim=1, keepdim=True)
+        score, idx_cls = cls.max(dim=1, keepdim=True)
 
         # Расширенный тензор с предсказаниями, size (nb, 4 + score + idx_cls)
         pr = torch.cat((box, score, idx_cls. float()), dim=1)
